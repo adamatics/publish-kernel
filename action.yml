@@ -55,14 +55,14 @@ runs:
       shell: bash
       run: |
         python -m pip install --upgrade pip
-        pip install --extra-index-url https://staging-adalab.adamatics.io/devpi/admin/adalib-dev adalib
+        pip install --extra-index-url https://staging-adalab.adamatics.io/devpi/admin/adalib-dev adalib==2.12.0 adalib-auth==0.1.0
 
     - name: Register image as new kernel
       shell: bash
       run: |
         python <<EOF
         from adalib_auth import config
-        adalib_config = config.get_config(adaboard_api_url="${{ inputs.adalab_api_url }}", token="${{ inputs.adalab_user_token }}")
+        adalib_config = config.get_config(adaboard_api_url="${{ inputs.adalab_api_url }}", username="${{ inputs.adalab_username }}", password="${{ inputs.adalab_user_token }}")
         import adalib.harbor as harbor
         harbor.create_image_metadata(
             source_type="registry",
